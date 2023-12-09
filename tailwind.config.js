@@ -1,4 +1,5 @@
 import defaultTheme from "tailwindcss/defaultTheme";
+import colors from "tailwindcss/colors";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -7,6 +8,9 @@ export default {
     extend: {
       fontFamily: {
         sans: ["InterVariable", ...defaultTheme.fontFamily.sans],
+      },
+      colors: {
+        gray: colors.zinc,
       },
     },
   },
