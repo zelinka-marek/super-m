@@ -31,6 +31,11 @@ let router = createBrowserRouter(
           <ErrorPage />
         </div>
       }
+      loader={async () => {
+        let cart = await getCartItems();
+
+        return json({ cart });
+      }}
     >
       <Route index element={<IndexPage />} />
       <Route path="about" element={<AboutPage />} />

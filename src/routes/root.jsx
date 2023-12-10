@@ -1,14 +1,16 @@
 import clsx from "clsx";
-import { NavLink, Outlet } from "react-router-dom";
-
-let navigation = [
-  { name: "Home", to: "/" },
-  { name: "About", to: "/about" },
-  { name: "Products", to: "/products" },
-  { name: "Cart", to: "/cart" },
-];
+import { NavLink, Outlet, useLoaderData } from "react-router-dom";
 
 export default function Root() {
+  let { cart } = useLoaderData();
+
+  let navigation = [
+    { name: "Home", to: "/" },
+    { name: "About", to: "/about" },
+    { name: "Products", to: "/products" },
+    { name: cart.length > 0 ? `Cart (${cart.length})` : "Cart", to: "/cart" },
+  ];
+
   return (
     <div className="min-h-full bg-gray-100">
       <nav className="border-t-8 border-teal-400 bg-white shadow-sm">
