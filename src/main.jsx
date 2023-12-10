@@ -7,7 +7,7 @@ import {
   createRoutesFromElements,
   json,
 } from "react-router-dom";
-import { addCartItem, getCartItems } from "./api/cart";
+import { addCartItem, getCartItems, removeCartItem } from "./api/cart";
 import { getProductById, getProducts } from "./api/products";
 import ErrorPage from "./components/error-page";
 import "./index.css";
@@ -51,17 +51,17 @@ let router = createBrowserRouter(
           let formData = await request.formData();
           let productId = formData.get("productId");
 
-          let product = await getProductById(productId);
+          let product = await getProductById(Number.parseInt(productId, 10));
           await addCartItem(product);
 
-          return json({ product });
+          return json({ ok: true, product });
         }}
       />
       <Route
         path="products/:id"
         element={<ProductPage />}
         loader={async ({ params }) => {
-          let product = await getProductById(params.id);
+          let product = await getProductById(Number.parseInt(params.id, 10));
 
           return json({ product });
         }}
@@ -77,6 +77,14 @@ let router = createBrowserRouter(
           let cart = await getCartItems();
 
           return json({ cart });
+        }}
+        action={async ({ request }) => {
+          let formData = await request.formData();
+          let itemId = formData.get("itemId");
+
+          await removeCartItem(Number.parseInt(itemId, 10));
+
+          return json({ ok: true, itemId });
         }}
       />
     </Route>,

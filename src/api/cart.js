@@ -21,6 +21,13 @@ export async function addCartItem(product) {
   }
 }
 
+export async function removeCartItem(id) {
+  let cart = await getCartItems();
+  let updatedCart = cart.filter((item) => item.id !== id);
+
+  set(updatedCart);
+}
+
 function set(cart) {
   return localforage.setItem("cart", cart);
 }

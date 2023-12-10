@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { Form, Link, useLoaderData } from "react-router-dom";
 
 export default function CartPage() {
   let { cart } = useLoaderData();
@@ -47,12 +47,16 @@ export default function CartPage() {
                 <div className="flex flex-1 items-end justify-between">
                   <p className="text-sm text-gray-500">Qty {item.quantity}</p>
                   <div className="flex">
-                    <button
-                      type="button"
-                      className="text-sm font-medium text-teal-600 hover:text-teal-500"
-                    >
-                      Remove
-                    </button>
+                    <Form method="POST">
+                      <input type="hidden" name="itemId" value={item.id} />
+                      <button
+                        type="submit"
+                        className="text-sm font-medium text-teal-600 hover:text-teal-500"
+                        aria-label={`Remove ${item.name} from cart`}
+                      >
+                        Remove
+                      </button>
+                    </Form>
                   </div>
                 </div>
               </div>
