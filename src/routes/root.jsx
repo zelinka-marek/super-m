@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { NavLink, Outlet, useLoaderData } from "react-router-dom";
+import { Link, NavLink, Outlet, useLoaderData } from "react-router-dom";
 
 export default function Root() {
   let { cart } = useLoaderData();
@@ -18,7 +18,7 @@ export default function Root() {
           <div className="flex h-16 justify-between">
             <div className="flex flex-none items-center">
               <h1 className="text-base/7 font-semibold text-gray-900">
-                SuperM
+                <Link to="/">SuperM</Link>
               </h1>
             </div>
             <div className="-my-px ml-6 flex gap-8">
