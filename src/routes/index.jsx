@@ -3,7 +3,7 @@ import imgUrl from "../assets/home.jpg";
 
 export default function IndexPage() {
   return (
-    <div className="mx-auto max-w-2xl lg:mx-0 lg:grid lg:max-w-none lg:grid-cols-2 lg:items-center lg:gap-x-16">
+    <div className="mx-auto max-w-xl lg:mx-0 lg:grid lg:max-w-none lg:grid-cols-2 lg:items-center lg:gap-x-16">
       <div>
         <h1 className="text-3xl font-bold leading-tight tracking-tight text-gray-900">
           Online shopping simplified
