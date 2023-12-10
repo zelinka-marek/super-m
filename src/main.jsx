@@ -1,10 +1,12 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter, json } from "react-router-dom";
+import { getProducts } from "./api/products";
 import ErrorPage from "./components/error-page";
 import "./index.css";
 import IndexRoute from "./routes";
 import AboutRoute from "./routes/about";
+import ProductsRoute from "./routes/products";
 import RootRoute from "./routes/root";
 
 let router = createBrowserRouter([
@@ -19,6 +21,15 @@ let router = createBrowserRouter([
     children: [
       { index: true, element: <IndexRoute /> },
       { path: "/about", element: <AboutRoute /> },
+      {
+        path: "/products",
+        element: <ProductsRoute />,
+        loader: async () => {
+          let products = await getProducts();
+
+          return json({ products });
+        },
+      },
     ],
   },
 ]);

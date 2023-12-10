@@ -12,7 +12,7 @@ export default function RootRoute() {
   return (
     <div className="min-h-full bg-gray-100">
       <nav className="border-t-8 border-teal-400 bg-white shadow-sm">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <div className="flex flex-none items-center">
               <h1 className="text-base/7 font-semibold text-gray-900">
@@ -41,7 +41,7 @@ export default function RootRoute() {
         </div>
       </nav>
       <main className="py-10">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <Outlet />
         </div>
       </main>
