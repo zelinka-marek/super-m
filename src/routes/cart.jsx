@@ -19,9 +19,13 @@ export default function CartPage() {
         <ul role="list" className="-my-6 divide-y divide-gray-200">
           {cart.map((item) => (
             <li key={item.id} className="flex gap-4 py-6">
-              <div className="inline-flex h-24 w-24 flex-none items-center justify-center overflow-hidden rounded-lg bg-gray-50">
+              <Link
+                to={`/products/${item.id.toString()}`}
+                className="inline-flex h-24 w-24 flex-none items-center justify-center overflow-hidden rounded-lg bg-gray-50"
+                aria-label={item.name}
+              >
                 <img src={item.image} alt="" className="h-20 w-20" />
-              </div>
+              </Link>
               <div className="flex flex-1 flex-col">
                 <div>
                   <div className="flex justify-between gap-4">
