@@ -12,10 +12,10 @@ export async function addCartItem(product) {
   if (existingItem) {
     let updatedCart = cart.map((item) =>
       item.id === product.id
-        ? { ...product, quantity: product.quantity + 1 }
+        ? { ...product, quantity: item.quantity + 1 }
         : item,
     );
-    await set(updatedCart);
+    set(updatedCart);
   } else {
     set(cart.concat({ ...product, quantity: 1 }));
   }
