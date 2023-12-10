@@ -1,4 +1,9 @@
+import { loadStripe } from "@stripe/stripe-js";
 import { Form, Link, useLoaderData } from "react-router-dom";
+
+const stripeLoadedPromise = loadStripe(
+  "pk_test_51HsqkCGuhXEITAut89vmc4jtjYd7XPs8hWfo2XPef15MFqI8rCFc8NqQU9WutlUBsd8kmNqHBeEmSrdMMpeEEyfT00KzeVdate",
+);
 
 export default function CartPage() {
   let { cart } = useLoaderData();
@@ -7,6 +12,20 @@ export default function CartPage() {
     (total, item) => total + item.price * item.quantity,
     0,
   );
+
+  async function handleCheckout() {
+    let lineItems = cart.map((item) => {
+      return { price: item.price_id, quantity: item.quantity };
+    });
+
+    let stripe = await stripeLoadedPromise;
+    stripe.redirectToCheckout({
+      lineItems: lineItems,
+      mode: "payment",
+      successUrl: "http://localhost:5173/cart/success",
+      cancelUrl: "http://localhost:5173/cart",
+    });
+  }
 
   return (
     <div className="space-y-10 sm:space-y-16">
@@ -20,89 +39,97 @@ export default function CartPage() {
           </p>
         ) : null}
       </div>
-      <div className="space-y-6">
-        <div className="flow-root">
-          <ul role="list" className="-my-6 divide-y divide-gray-200">
-            {cart.map((item) => (
-              <li key={item.id} className="flex gap-4 py-6">
-                <Link
-                  to={`/products/${item.id.toString()}`}
-                  className="inline-flex h-24 w-24 flex-none items-center justify-center overflow-hidden rounded-lg bg-gray-50"
-                  aria-label={item.name}
-                >
-                  <img src={item.image} alt="" className="h-20 w-20" />
-                </Link>
-                <div className="flex flex-1 flex-col">
-                  <div>
-                    <div className="flex justify-between gap-4">
-                      <h3 className="text-base font-medium text-gray-900">
-                        {item.name}
-                      </h3>
-                      <p className="text-base font-medium text-gray-900">
-                        {item.price.toLocaleString("en-US", {
-                          style: "currency",
-                          currency: "USD",
-                          minimumFractionDigits: 0,
-                        })}
+      {cart.length > 0 ? (
+        <div className="space-y-6">
+          <div className="flow-root">
+            <ul role="list" className="-my-6 divide-y divide-gray-200">
+              {cart.map((item) => (
+                <li key={item.id} className="flex gap-4 py-6">
+                  <Link
+                    to={`/products/${item.id.toString()}`}
+                    className="inline-flex h-24 w-24 flex-none items-center justify-center overflow-hidden rounded-lg bg-gray-50"
+                    aria-label={item.name}
+                  >
+                    <img src={item.image} alt="" className="h-20 w-20" />
+                  </Link>
+                  <div className="flex flex-1 flex-col">
+                    <div>
+                      <div className="flex justify-between gap-4">
+                        <h3 className="text-base font-medium text-gray-900">
+                          {item.name}
+                        </h3>
+                        <p className="text-base font-medium text-gray-900">
+                          {item.price.toLocaleString("en-US", {
+                            style: "currency",
+                            currency: "USD",
+                            minimumFractionDigits: 0,
+                          })}
+                        </p>
+                      </div>
+                      <p className="mt-1 text-sm text-gray-500">
+                        {item.description}
                       </p>
                     </div>
-                    <p className="mt-1 text-sm text-gray-500">
-                      {item.description}
-                    </p>
-                  </div>
-                  <div className="flex flex-1 items-end justify-between">
-                    <p className="text-sm text-gray-500">Qty {item.quantity}</p>
-                    <div className="flex">
-                      <Form method="POST">
-                        <input type="hidden" name="itemId" value={item.id} />
-                        <button
-                          type="submit"
-                          className="text-sm font-medium text-teal-600 hover:text-teal-500"
-                          aria-label={`Remove ${item.name} from cart`}
-                        >
-                          Remove
-                        </button>
-                      </Form>
+                    <div className="flex flex-1 items-end justify-between">
+                      <p className="text-sm text-gray-500">
+                        Qty {item.quantity}
+                      </p>
+                      <div className="flex">
+                        <Form method="POST">
+                          <input type="hidden" name="itemId" value={item.id} />
+                          <button
+                            type="submit"
+                            className="text-sm font-medium text-teal-600 hover:text-teal-500"
+                            aria-label={`Remove ${item.name} from cart`}
+                          >
+                            Remove
+                          </button>
+                        </Form>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="border-t border-gray-200 py-6">
-          <div className="flex justify-between">
-            <p className="text-base font-medium text-gray-700">Subtotal</p>
-            <p className="text-base font-medium text-gray-900">
-              {totalPrice.toLocaleString("en-US", {
-                style: "currency",
-                currency: "USD",
-                minimumFractionDigits: 0,
-              })}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="border-t border-gray-200 py-6">
+            <div className="flex justify-between">
+              <p className="text-base font-medium text-gray-700">Subtotal</p>
+              <p className="text-base font-medium text-gray-900">
+                {totalPrice.toLocaleString("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                  minimumFractionDigits: 0,
+                })}
+              </p>
+            </div>
+            <p className="mt-0.5 text-sm text-gray-500">
+              Your products will be delivered to you.
+            </p>
+            <p className="mt-0.5 text-sm text-gray-500">
+              Shipping and taxes are calculated at checkout.
+            </p>
+            <div className="mt-6">
+              <button
+                type="button"
+                onClick={handleCheckout}
+                className="inline-flex w-full justify-center rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500"
+              >
+                Checkout
+              </button>
+            </div>
+            <p className="mt-6 text-center text-sm text-gray-500">
+              or{" "}
+              <Link
+                to="/products"
+                className="font-medium text-teal-600 hover:text-teal-500"
+              >
+                Continue Shopping <span aria-hidden>&rarr;</span>
+              </Link>
             </p>
           </div>
-          <p className="mt-0.5 text-sm text-gray-500">
-            Shipping and taxes calculated at checkout.
-          </p>
-          <div className="mt-6 flex flex-col text-center">
-            <a
-              href="#"
-              className="rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500"
-            >
-              Checkout
-            </a>
-          </div>
-          <p className="mt-6 text-center text-sm text-gray-500">
-            or{" "}
-            <Link
-              to="/products"
-              className="font-medium text-teal-600 hover:text-teal-500"
-            >
-              Continue Shopping <span aria-hidden>&rarr;</span>
-            </Link>
-          </p>
         </div>
-      </div>
+      ) : null}
     </div>
   );
 }

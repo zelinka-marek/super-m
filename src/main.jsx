@@ -6,8 +6,14 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   json,
+  redirect,
 } from "react-router-dom";
-import { addCartItem, getCartItems, removeCartItem } from "./api/cart";
+import {
+  addCartItem,
+  clearCartItems,
+  getCartItems,
+  removeCartItem,
+} from "./api/cart";
 import { getProductById, getProducts } from "./api/products";
 import ErrorPage from "./components/error-page";
 import "./index.css";
@@ -85,6 +91,14 @@ let router = createBrowserRouter(
           await removeCartItem(Number.parseInt(itemId, 10));
 
           return json({ ok: true, itemId });
+        }}
+      />
+      <Route
+        path="cart/success"
+        loader={async () => {
+          await clearCartItems();
+
+          return redirect("/");
         }}
       />
     </Route>,

@@ -6,6 +6,10 @@ export async function getCartItems() {
   return cart ?? [];
 }
 
+export async function clearCartItems() {
+  await localforage.removeItem("cart");
+}
+
 export async function addCartItem(product) {
   let cart = await getCartItems();
   let existingItem = cart.find((item) => item.id === product.id);
