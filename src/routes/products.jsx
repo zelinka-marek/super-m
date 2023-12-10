@@ -1,5 +1,4 @@
 import { Link, useLoaderData } from "react-router-dom";
-import { formatCurrency } from "../utils/currency";
 
 export default function ProductsRoute() {
   let { products } = useLoaderData();
@@ -20,10 +19,12 @@ export default function ProductsRoute() {
             key={product.id}
             className="flex gap-6 rounded-2xl bg-white p-6 shadow max-sm:flex-col"
           >
-            <Link to={product.id.toString()} aria-label={product.name}>
-              <span className="inline-flex h-24 w-24 flex-none items-center justify-center rounded-xl bg-gray-100 max-sm:mx-auto">
-                <img className="h-16 w-16" src={product.image} alt="" />
-              </span>
+            <Link
+              to={product.id.toString()}
+              className="inline-flex h-[100px] w-[100px] flex-none items-center justify-center rounded-xl bg-gray-50 max-sm:mx-auto"
+              aria-label={product.name}
+            >
+              <img className="h-20 w-20" src={product.image} alt="" />
             </Link>
             <div className="max-sm:text-center sm:flex-auto">
               <p className="text-2xl font-bold text-gray-900 sm:text-xl">
@@ -37,7 +38,11 @@ export default function ProductsRoute() {
                   type="button"
                   className="rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500"
                 >
-                  {formatCurrency(product.price, { minimumFractionDigits: 0 })}
+                  {product.price.toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                    minimumFractionDigits: 0,
+                  })}
                 </button>
               </div>
             </div>

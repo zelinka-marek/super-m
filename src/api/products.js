@@ -6,3 +6,12 @@ export async function getProducts() {
 
   return products;
 }
+
+export async function getProductById(id) {
+  let response = await fetch(
+    `https://react-tutorial-demo.firebaseio.com/productinfo/id${id}.json`,
+  );
+  let product = await response.json();
+
+  return product;
+}
