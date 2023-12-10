@@ -1,6 +1,6 @@
 import { useOutletContext } from "react-router-dom";
 
-export default function ProductNutritionRoute() {
+export default function ProductNutritionPage() {
   let { product } = useOutletContext();
 
   let nutrientData = {

@@ -8,7 +8,7 @@ let navigation = [
   { name: "Cart", to: "/cart" },
 ];
 
-export default function RootRoute() {
+export default function Root() {
   return (
     <div className="min-h-full bg-gray-100">
       <nav className="border-t-8 border-teal-400 bg-white shadow-sm">

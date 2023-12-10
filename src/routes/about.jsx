@@ -1,6 +1,6 @@
 import imgUrl from "../assets/about.jpg";
 
-export default function AboutRoute() {
+export default function AboutPage() {
   return (
     <div className="mx-auto max-w-2xl lg:mx-0 lg:grid lg:max-w-none lg:grid-cols-2 lg:items-center lg:gap-x-16">
       <div>

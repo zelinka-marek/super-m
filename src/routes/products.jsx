@@ -1,6 +1,6 @@
 import { Link, useLoaderData } from "react-router-dom";
 
-export default function ProductsRoute() {
+export default function ProductsPage() {
   let { products } = useLoaderData();
 
   return (

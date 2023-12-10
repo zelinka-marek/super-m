@@ -7,7 +7,7 @@ let tabs = [
   { name: "Storage", to: "storage" },
 ];
 
-export default function ProductRoute() {
+export default function ProductPage() {
   let { product } = useLoaderData();
 
   return (

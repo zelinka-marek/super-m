@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import imgUrl from "../assets/home.jpg";
 
-export default function IndexRoute() {
+export default function IndexPage() {
   return (
     <div className="mx-auto max-w-2xl lg:mx-0 lg:grid lg:max-w-none lg:grid-cols-2 lg:items-center lg:gap-x-16">
       <div>

@@ -1,56 +1,62 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { RouterProvider, createBrowserRouter, json } from "react-router-dom";
+import {
+  Route,
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
+  json,
+} from "react-router-dom";
 import { getProductById, getProducts } from "./api/products";
 import ErrorPage from "./components/error-page";
 import "./index.css";
-import IndexRoute from "./routes";
-import AboutRoute from "./routes/about";
-import ProductRoute from "./routes/product";
-import ProductDetailsRoute from "./routes/product-details";
-import ProductNutritionRoute from "./routes/product-nutrition";
-import ProductsRoute from "./routes/products";
-import RootRoute from "./routes/root";
-import ProductStorageRoute from "./routes/product-storage";
+import IndexPage from "./routes";
+import AboutPage from "./routes/about";
+import ProductPage from "./routes/product";
+import ProductDetailsPage from "./routes/product-details";
+import ProductNutritionPage from "./routes/product-nutrition";
+import ProductStoragePage from "./routes/product-storage";
+import ProductsPage from "./routes/products";
+import Root from "./routes/root";
 
-let router = createBrowserRouter([
-  {
-    path: "/",
-    element: <RootRoute />,
-    errorElement: (
-      <div className="flex h-full items-center justify-center bg-gray-100">
-        <ErrorPage />
-      </div>
-    ),
-    children: [
-      { index: true, element: <IndexRoute /> },
-      { path: "/about", element: <AboutRoute /> },
-      {
-        path: "/products",
-        element: <ProductsRoute />,
-        loader: async () => {
+let router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route
+      path="/"
+      element={<Root />}
+      errorElement={
+        <div className="flex h-full items-center justify-center bg-gray-100">
+          <ErrorPage />
+        </div>
+      }
+    >
+      <Route index element={<IndexPage />} />
+      <Route path="about" element={<AboutPage />} />
+      <Route
+        path="products"
+        element={<ProductsPage />}
+        loader={async () => {
           let products = await getProducts();
 
           return json({ products });
-        },
-      },
-      {
-        path: "/products/:id",
-        element: <ProductRoute />,
-        loader: async ({ params }) => {
+        }}
+      />
+      <Route
+        path="products/:id"
+        element={<ProductPage />}
+        loader={async ({ params }) => {
           let product = await getProductById(params.id);
 
           return json({ product });
-        },
-        children: [
-          { index: true, element: <ProductDetailsRoute /> },
-          { path: "nutrition", element: <ProductNutritionRoute /> },
-          { path: "storage", element: <ProductStorageRoute /> },
-        ],
-      },
-    ],
-  },
-]);
+        }}
+      >
+        <Route index element={<ProductDetailsPage />} />
+        <Route path="nutrition" element={<ProductNutritionPage />} />
+        <Route path="storage" element={<ProductStoragePage />} />
+      </Route>
+    </Route>,
+  ),
+);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

@@ -1,6 +1,6 @@
 import { useOutletContext } from "react-router-dom";
 
-export default function ProductDetailsRoute() {
+export default function ProductDetailsPage() {
   let { product } = useOutletContext();
 
   return (
