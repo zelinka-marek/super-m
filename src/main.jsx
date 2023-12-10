@@ -7,11 +7,13 @@ import {
   createRoutesFromElements,
   json,
 } from "react-router-dom";
+import { addCartItem, getCartItems } from "./api/cart";
 import { getProductById, getProducts } from "./api/products";
 import ErrorPage from "./components/error-page";
 import "./index.css";
 import IndexPage from "./routes";
 import AboutPage from "./routes/about";
+import CartPage from "./routes/cart";
 import ProductPage from "./routes/product";
 import ProductDetailsPage from "./routes/product-details";
 import ProductNutritionPage from "./routes/product-nutrition";
@@ -40,6 +42,15 @@ let router = createBrowserRouter(
 
           return json({ products });
         }}
+        action={async ({ request }) => {
+          let formData = await request.formData();
+          let productId = formData.get("productId");
+
+          let product = await getProductById(productId);
+          await addCartItem(product);
+
+          return json({ product });
+        }}
       />
       <Route
         path="products/:id"
@@ -54,6 +65,15 @@ let router = createBrowserRouter(
         <Route path="nutrition" element={<ProductNutritionPage />} />
         <Route path="storage" element={<ProductStoragePage />} />
       </Route>
+      <Route
+        path="cart"
+        element={<CartPage />}
+        loader={async () => {
+          let cart = await getCartItems();
+
+          return json({ cart });
+        }}
+      />
     </Route>,
   ),
 );

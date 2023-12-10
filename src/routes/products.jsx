@@ -1,4 +1,4 @@
-import { Link, useLoaderData } from "react-router-dom";
+import { Form, Link, useLoaderData } from "react-router-dom";
 
 export default function ProductsPage() {
   let { products } = useLoaderData();
@@ -17,33 +17,36 @@ export default function ProductsPage() {
         {products.map((product) => (
           <li
             key={product.id}
-            className="flex gap-6 rounded-2xl bg-white p-6 shadow max-sm:flex-col"
+            className="flex gap-6 rounded-xl bg-white p-6 shadow max-sm:flex-col"
           >
             <Link
               to={product.id.toString()}
-              className="inline-flex h-[100px] w-[100px] flex-none items-center justify-center rounded-xl bg-gray-50 max-sm:mx-auto"
+              className="inline-flex h-24 w-24 flex-none items-center justify-center overflow-hidden rounded-lg bg-gray-50 max-sm:mx-auto"
               aria-label={product.name}
             >
               <img className="h-20 w-20" src={product.image} alt="" />
             </Link>
-            <div className="max-sm:text-center sm:flex-auto">
-              <p className="text-2xl font-bold text-gray-900 sm:text-xl">
+            <div className="max-sm:text-center sm:flex sm:flex-auto sm:flex-col">
+              <p className="text-base font-medium text-gray-900">
                 {product.name}
               </p>
               <p className="mt-1 text-sm text-gray-500">
                 {product.description}
               </p>
-              <div className="mt-3 sm:flex sm:justify-end">
-                <button
-                  type="button"
-                  className="rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500"
-                >
-                  {product.price.toLocaleString("en-US", {
-                    style: "currency",
-                    currency: "USD",
-                    minimumFractionDigits: 0,
-                  })}
-                </button>
+              <div className="max-sm:mt-3 sm:flex sm:flex-1 sm:items-end sm:justify-end">
+                <Form method="POST">
+                  <input type="hidden" name="productId" value={product.id} />
+                  <button
+                    type="submit"
+                    className="rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500"
+                  >
+                    {product.price.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                      minimumFractionDigits: 0,
+                    })}
+                  </button>
+                </Form>
               </div>
             </div>
           </li>
