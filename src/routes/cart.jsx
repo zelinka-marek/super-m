@@ -3,8 +3,13 @@ import { Form, Link, useLoaderData } from "react-router-dom";
 export default function CartPage() {
   let { cart } = useLoaderData();
 
+  let totalPrice = cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0,
+  );
+
   return (
-    <div className="mx-auto max-w-xl space-y-10 sm:space-y-16">
+    <div className="space-y-10 sm:space-y-16">
       <div>
         <h1 className="text-3xl font-bold leading-tight tracking-tight text-gray-900">
           Your Cart
@@ -68,7 +73,13 @@ export default function CartPage() {
         <div className="border-t border-gray-200 py-6">
           <div className="flex justify-between">
             <p className="text-base font-medium text-gray-700">Subtotal</p>
-            <p className="text-base font-medium text-gray-900">$262.00</p>
+            <p className="text-base font-medium text-gray-900">
+              {totalPrice.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+                minimumFractionDigits: 0,
+              })}
+            </p>
           </div>
           <p className="mt-0.5 text-sm text-gray-500">
             Shipping and taxes calculated at checkout.
