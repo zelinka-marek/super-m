@@ -1,8 +1,8 @@
 import { loadStripe } from "@stripe/stripe-js";
 import { Form, Link, useLoaderData } from "react-router-dom";
 
-const stripeLoadedPromise = loadStripe(
-  "pk_test_51HsqkCGuhXEITAut89vmc4jtjYd7XPs8hWfo2XPef15MFqI8rCFc8NqQU9WutlUBsd8kmNqHBeEmSrdMMpeEEyfT00KzeVdate",
+let stripeLoadedPromise = loadStripe(
+  import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY,
 );
 
 export default function CartPage() {
@@ -22,8 +22,8 @@ export default function CartPage() {
     stripe.redirectToCheckout({
       lineItems: lineItems,
       mode: "payment",
-      successUrl: "http://localhost:5173/cart/success",
-      cancelUrl: "http://localhost:5173/cart",
+      successUrl: import.meta.env.VITE_STRIPE_CHECKOUT_SUCCESS_URL,
+      cancelUrl: import.meta.env.VITE_STRIPE_CHECKOUT_CANCEL_URL,
     });
   }
 
