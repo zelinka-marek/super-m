@@ -13,19 +13,19 @@ import {
   clearCartItems,
   getCartItems,
   removeCartItem,
-} from "./api/cart";
-import { getProductById, getProducts } from "./api/products";
-import ErrorPage from "./components/error-page";
+} from "./api/cart.js";
+import { getProductById, getProducts } from "./api/products.js";
+import ErrorPage from "./components/error-page.jsx";
 import "./index.css";
-import IndexPage from "./routes";
-import AboutPage from "./routes/about";
-import CartPage from "./routes/cart";
-import ProductPage from "./routes/product";
-import ProductDetailsPage from "./routes/product-details";
-import ProductNutritionPage from "./routes/product-nutrition";
-import ProductStoragePage from "./routes/product-storage";
-import ProductsPage from "./routes/products";
-import Root from "./routes/root";
+import AboutPage from "./routes/about.jsx";
+import CartPage from "./routes/cart.jsx";
+import HomePage from "./routes/home.jsx";
+import ProductDetailsPage from "./routes/product-details.jsx";
+import ProductNutritionPage from "./routes/product-nutrition.jsx";
+import ProductStoragePage from "./routes/product-storage.jsx";
+import ProductPage from "./routes/product.jsx";
+import ProductsPage from "./routes/products.jsx";
+import Root from "./routes/root.jsx";
 
 let router = createBrowserRouter(
   createRoutesFromElements(
@@ -43,7 +43,7 @@ let router = createBrowserRouter(
         return json({ cart });
       }}
     >
-      <Route index element={<IndexPage />} />
+      <Route index element={<HomePage />} />
       <Route path="about" element={<AboutPage />} />
       <Route
         path="products"
