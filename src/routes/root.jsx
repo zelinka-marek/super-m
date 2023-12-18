@@ -2,9 +2,9 @@ import clsx from "clsx";
 import { Link, NavLink, Outlet, useLoaderData } from "react-router-dom";
 
 export default function Root() {
-  let { cart } = useLoaderData();
+  const { cart } = useLoaderData();
 
-  let navigation = [
+  const navigation = [
     { name: "Home", to: "/" },
     { name: "About", to: "/about" },
     { name: "Products", to: "/products" },

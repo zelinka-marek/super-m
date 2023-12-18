@@ -1,7 +1,7 @@
 import { useOutletContext } from "react-router-dom";
 
 export default function ProductDetailsPage() {
-  let { product } = useOutletContext();
+  const { product } = useOutletContext();
 
   return (
     <>

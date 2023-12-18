@@ -1,14 +1,14 @@
 import clsx from "clsx";
 import { NavLink, Outlet, useLoaderData } from "react-router-dom";
 
-let tabs = [
+const tabs = [
   { name: "Details", to: "." },
   { name: "Nutrition", to: "nutrition" },
   { name: "Storage", to: "storage" },
 ];
 
 export default function ProductPage() {
-  let { product } = useLoaderData();
+  const { product } = useLoaderData();
 
   return (
     <>

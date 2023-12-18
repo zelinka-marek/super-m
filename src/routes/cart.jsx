@@ -1,24 +1,24 @@
 import { loadStripe } from "@stripe/stripe-js";
 import { Form, Link, useLoaderData } from "react-router-dom";
 
-let stripeLoadedPromise = loadStripe(
+const stripeLoadedPromise = loadStripe(
   import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY,
 );
 
 export default function CartPage() {
-  let { cart } = useLoaderData();
+  const { cart } = useLoaderData();
 
-  let totalPrice = cart.reduce(
+  const totalPrice = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0,
   );
 
   async function handleCheckout() {
-    let lineItems = cart.map((item) => {
+    const lineItems = cart.map((item) => {
       return { price: item.price_id, quantity: item.quantity };
     });
 
-    let stripe = await stripeLoadedPromise;
+    const stripe = await stripeLoadedPromise;
     stripe.redirectToCheckout({
       lineItems: lineItems,
       mode: "payment",

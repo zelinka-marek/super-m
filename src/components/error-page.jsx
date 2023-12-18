@@ -1,10 +1,10 @@
 import { isRouteErrorResponse, useRouteError } from "react-router-dom";
 
 export default function ErrorPage() {
-  let error = useRouteError();
+  const error = useRouteError();
   console.error(error);
 
-  let errorMessage = isRouteErrorResponse(error)
+  const errorMessage = isRouteErrorResponse(error)
     ? error.statusText
     : error instanceof Error
       ? error.message

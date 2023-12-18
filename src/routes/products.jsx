@@ -1,7 +1,7 @@
 import { Form, Link, useLoaderData } from "react-router-dom";
 
 export default function ProductsPage() {
-  let { products } = useLoaderData();
+  const { products } = useLoaderData();
 
   return (
     <div className="space-y-10 sm:space-y-16">

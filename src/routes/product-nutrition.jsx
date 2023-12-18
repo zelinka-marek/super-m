@@ -1,9 +1,9 @@
 import { useOutletContext } from "react-router-dom";
 
 export default function ProductNutritionPage() {
-  let { product } = useOutletContext();
+  const { product } = useOutletContext();
 
-  let nutrientData = {
+  const nutrientData = {
     Protein: product.nutrition.protein,
     Carbohydrates: product.nutrition.carbs,
     Fat: product.nutrition.fat,

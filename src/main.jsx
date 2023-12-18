@@ -27,7 +27,7 @@ import ProductPage from "./routes/product.jsx";
 import ProductsPage from "./routes/products.jsx";
 import Root from "./routes/root.jsx";
 
-let router = createBrowserRouter(
+const router = createBrowserRouter(
   createRoutesFromElements(
     <Route
       path="/"
@@ -38,7 +38,7 @@ let router = createBrowserRouter(
         </div>
       }
       loader={async () => {
-        let cart = await getCartItems();
+        const cart = await getCartItems();
 
         return json({ cart });
       }}
@@ -49,15 +49,15 @@ let router = createBrowserRouter(
         path="products"
         element={<ProductsPage />}
         loader={async () => {
-          let products = await getProducts();
+          const products = await getProducts();
 
           return json({ products });
         }}
         action={async ({ request }) => {
-          let formData = await request.formData();
-          let productId = formData.get("productId");
+          const formData = await request.formData();
+          const productId = formData.get("productId");
 
-          let product = await getProductById(Number.parseInt(productId, 10));
+          const product = await getProductById(Number.parseInt(productId, 10));
           await addCartItem(product);
 
           return json({ ok: true, product });
@@ -67,7 +67,7 @@ let router = createBrowserRouter(
         path="products/:id"
         element={<ProductPage />}
         loader={async ({ params }) => {
-          let product = await getProductById(Number.parseInt(params.id, 10));
+          const product = await getProductById(Number.parseInt(params.id, 10));
 
           return json({ product });
         }}
@@ -80,13 +80,13 @@ let router = createBrowserRouter(
         path="cart"
         element={<CartPage />}
         loader={async () => {
-          let cart = await getCartItems();
+          const cart = await getCartItems();
 
           return json({ cart });
         }}
         action={async ({ request }) => {
-          let formData = await request.formData();
-          let itemId = formData.get("itemId");
+          const formData = await request.formData();
+          const itemId = formData.get("itemId");
 
           await removeCartItem(Number.parseInt(itemId, 10));
 
